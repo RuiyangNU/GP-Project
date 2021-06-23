@@ -8,6 +8,11 @@
 % points. Reference points are defaulted to the points given by the
 % getRef() function.
 function hl = toHL(freq, spl, refX, refY)
+    % set default reference curve
+    if ~exist('refX', 'var') || ~exist('refY', 'var') || isempty(refX) || isempty(refY)
+        [refX, refY] = getRef();
+    end
+
     % locate the index of the frequency value present on the reference
     % curve that is closest to the x value of the given point
     [~, index] = min(abs(freq - refX));
