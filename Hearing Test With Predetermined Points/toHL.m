@@ -7,7 +7,7 @@
 % Converts a vector of points from dB SPL to HL using a set of reference
 % points. Reference points are defaulted to the points given by the
 % getRef() function.
-function hl = spl2hl(freq, spl, refX, refY)
+function hl = toHL(freq, spl, refX, refY)
     % locate the index of the frequency value present on the reference
     % curve that is closest to the x value of the given point
     [~, index] = min(abs(freq - refX));
