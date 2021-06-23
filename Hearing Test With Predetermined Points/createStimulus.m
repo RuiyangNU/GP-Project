@@ -9,12 +9,13 @@
 %
 function stimulusArray = createStimulus(freq, amplitude, duration, samplerate)
     % set default values for duration and samplerate
-    if ~exist(duration,'var') || isempty(duration) 
+    if ~exist(duration, 'var') || isempty(duration) 
         duration = 3;
     end
     
-    
-    samplerate = 44100;
+    if ~exist(samplerate, 'var') || isempty(samplerate)
+        samplerate = 44100;
+    end
 
     % create array with proper length
     stimulusArray = zeros((4 + duration) * samplerate, 1);
@@ -22,19 +23,19 @@ function stimulusArray = createStimulus(freq, amplitude, duration, samplerate)
     % create sound wave using piecewise function
     for i = 1:1:length(stimulusArray)
         if i <= samplerate
-            % keep zeros
+            % starting zeros
             continue;
         elseif i > samplerate  && i <= 2 * samplerate
-            % create upwards slope
+            % create upward sloping sinusoid
             stimulusArray(i,1) = (mod(i, samplerate) / samplerate) * amplitude * sin(2 * pi * i * (freq / samplerate));
         elseif i > 2 * samplerate && length(stimulusArray) - i >= 2 * samplerate
-            % create waves
+            % create flat sinusoid with given amplitude
             stimulusArray(i,1) = amplitude * sin(2 * pi * i * (freq / samplerate));
         elseif length(stimulusArray) - i < 2 * samplerate && length(stimulusArray) - i >= samplerate
-            % create downwards slope
+            % create downward sloping sinusoid
             stimulusArray(i,1) = ((samplerate - mod(i, samplerate)) / samplerate) * amplitude * sin(2 * pi * i * (freq / samplerate));
         else
-            % keep zeros
+            % stopping zeros
             continue;
         end
     end
