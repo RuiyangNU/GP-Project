@@ -4,8 +4,8 @@
 % function stimulusArray = createStimulus(freq, amplitude, duration, samplerate)
 %
 % Creates a stimulus with the given frequency and amplitude. The duration
-% and samplerate are optional parameters with default values of 3 and
-% 44100, respectively.
+% and samplerate are optional parameters with default values of 3 seconds and
+% 44100Hz, respectively.
 %
 function stimulusArray = createStimulus(freq, amplitude, duration, samplerate)
     % set default values for duration and samplerate
