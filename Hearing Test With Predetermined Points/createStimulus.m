@@ -1,5 +1,5 @@
 % Version 1.0
-% Ray Tan
+% Ray Tan, Jeffrey Tang
 %
 % function stimulusArray = createStimulus(freq, amplitude, duration, samplerate)
 %
