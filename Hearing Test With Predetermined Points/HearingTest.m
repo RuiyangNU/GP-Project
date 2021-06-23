@@ -57,8 +57,6 @@ for ii = 1:1:size
     end
 end
 
-audible = [-1 -1 1 -1 -1 1 -1 1 1];
-
 % plot the graphs
 % plot reference curve
 subplot(2,2,[1,2]); plot(refX, refY);
