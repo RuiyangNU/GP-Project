@@ -2,6 +2,7 @@
 % Ray Tan, Jeffrey Tang
 %
 % function stimulusArray = createStimulus(freq, amplitude, duration, samplerate)
+% double[] = int, int, double, int
 %
 % Creates a stimulus with the given frequency and amplitude. The duration
 % and samplerate are optional parameters with default values of 3 seconds and
@@ -9,11 +10,11 @@
 %
 function stimulusArray = createStimulus(freq, amplitude, duration, samplerate)
     % set default values for duration and samplerate
-    if ~exist(duration, 'var') || isempty(duration) 
+    if ~exist('duration', 'var') || isempty(duration) 
         duration = 3;
     end
     
-    if ~exist(samplerate, 'var') || isempty(samplerate)
+    if ~exist('samplerate', 'var') || isempty(samplerate)
         samplerate = 44100;
     end
 

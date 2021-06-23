@@ -2,13 +2,15 @@
 % Ray Tan, Jeffrey Tang
 %
 % function [refX, refY] = getRef(numPoints)
+% [double[], double[]] = int
+%
 % Generates an interpolated reference curve for the normal minimum audible
 % SPL vs frequency for ages 10-21. The number of points in the curve is
 % optional and has a default of 100.
 % Data collected from ___________.
 function [refX, refY] = getRef(numPoints)
     % set default values for numPoints
-    if ~exist(numPoints, 'var') || isempty(numPoints)
+    if ~exist('numPoints', 'var') || isempty(numPoints)
         numPoints = 100;
     end
 
@@ -20,12 +22,12 @@ function [refX, refY] = getRef(numPoints)
         12.67, 14.25, 16.35, 20.44, 22.99, 27.16, 33.43, 40.69, ...
         48.00, 64.70, 83.45, 93.81, 93.07];
     
-    % define query points for interpolation
-    refX = linspace(125, 20000, numPoints);
-    
     % convert Hz scale to bark scale
     xnorm = hz2bark(xnorm);
-    refX = hz2bark(refX);
     
+    % define query points for interpolation
+    refX = linspace(min(xnorm), max(xnorm), numPoints);
+    
+    % get interpolated output
     refY = interp1(xnorm, ynorm, refX);
 end
