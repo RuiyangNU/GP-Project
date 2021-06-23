@@ -4,7 +4,7 @@
 % function stimulusArray = createStimulus(freq, amplitude, duration, samplerate)
 % double[] = int, int, double, int
 %
-% Creates a stimulus with the given frequency and amplitude. The duration
+% Creates a stimulus with the given frequency in Hz and amplitude. The duration
 % and samplerate are optional parameters with default values of 3 seconds and
 % 44100Hz, respectively.
 %
