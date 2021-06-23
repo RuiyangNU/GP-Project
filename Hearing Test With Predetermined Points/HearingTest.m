@@ -3,7 +3,7 @@
 
 % number of points along the frequency scale and the number of SPLs for
 % each frequency
-size = 3;
+size = 5;
 
 % generate reference curve
 [refX, refY] = getRef();
@@ -24,7 +24,7 @@ spls = reshape(splgrid, 1, size^2);
 % generate a matrix to record values
 audible = zeros(1,size^2);
 
-for ii = 1:1:size
+for ii = 1:1:size^2
     % get the frequency and SPL for the current point
     freq = freqs(ii);
     spl = spls(ii);
