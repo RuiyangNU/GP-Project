@@ -1,5 +1,5 @@
 % converts a boolean audibility value (-1 or 1) to a color (red or green)
-function color = audibToColor(audib)
+function color = audib2color(audib)
     color = zeros([length(audib) 3]);
     for i = 1:1:length(audib)    
         if audib(i) == -1
