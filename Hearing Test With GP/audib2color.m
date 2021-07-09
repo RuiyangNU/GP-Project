@@ -2,7 +2,7 @@
 function color = audib2color(audib)
     color = zeros([length(audib) 3]);
     for i = 1:1:length(audib)    
-        if audib(i) == -1
+        if audib(i) == -1 || audib(i) == 0
         % red
             color(i, 1) = 1;
             color(i, 2) = 0;
