@@ -1,1 +1,2 @@
-%Covariance Function - Squared Exponenet Covariance Function
+
+%Covariance Function - Squared Exponent Covariance Function
