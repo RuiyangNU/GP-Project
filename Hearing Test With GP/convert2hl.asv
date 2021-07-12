@@ -1,0 +1,10 @@
+% converts all points from standard curve to hearing level curve given
+% vector?
+function convert2hl(input_matrix)
+    refX = input_matrix(:,1) - [~,index] = min(abs(refFreq - input_matrix(i,1));
+    a = input_matrix(:,2);
+    for i = length(a)
+        a(i) - ;
+    end
+    input_matrix = (:,2);
+        
