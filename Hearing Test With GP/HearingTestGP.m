@@ -20,7 +20,7 @@ g2 = reshape(g2, [numel(g2),1]);
 % out_observed = double(refAmp(in_observed(:,1))' <= in_observed(:,2));
 % in_observed(:,1) = refFreq(in_observed(:,1));
 in_observed = [13 20];
-out_observed = [1];
+out_observed = 1;
 
 freq_test = linspace(min(refFreq), max(refFreq), testSize)';
 amp_test = linspace(0, max(refAmp), testSize)';
@@ -32,12 +32,13 @@ in_test = [g1, g2];
 gprMdl = fitrgp(in_observed, out_observed, ...
         'KernelFunction', 'ardsquaredexponential', ...
         'FitMethod', 'sd', ...
-        'BasisFunction', 'linear');
+        'BasisFunction', @normcdf, ...
+        'Beta', 0);
 out_test = predict(gprMdl, in_test);
 
 % gp
 
-for ii = 1:1:200
+for ii = 1:1:20
     
     % data = input("Input -1 to exit, 0 to automatically generate a point, or a vector to manually enter data.\n");
     data = 0;
