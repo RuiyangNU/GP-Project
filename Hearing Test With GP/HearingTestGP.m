@@ -9,12 +9,12 @@ refSize = 100;
 testSize = 200;
 
 % create observed and test sets
-index_observed = round(linspace(1,length(refFreq),10));
-freq_observed = refFreq(index_observed);
-amp_observed = 0:5:30;
-[g1, g2] = meshgrid(index_observed, amp_observed);
-g1 = reshape(g1, [numel(g1),1]);
-g2 = reshape(g2, [numel(g2),1]);
+% index_observed = round(linspace(1,length(refFreq),10));
+% freq_observed = refFreq(index_observed);
+% amp_observed = 0:5:30;
+% [g1, g2] = meshgrid(index_observed, amp_observed);
+% g1 = reshape(g1, [numel(g1),1]);
+% g2 = reshape(g2, [numel(g2),1]);
 
 % in_observed = [g1, g2];
 % out_observed = double(refAmp(in_observed(:,1))' <= in_observed(:,2));
