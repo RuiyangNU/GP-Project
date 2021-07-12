@@ -1,44 +1,45 @@
-% Version 1.0
+% Version 2.0
 % Ray Tan, Jeffrey Tang
 %
 % function stimulusArray = createStimulus(freq, amplitude, duration, samplerate)
 % double[] = int, int, double, int
 %
 % Creates a stimulus with the given frequency in Hz and amplitude. The duration
-% and samplerate are optional parameters with default values of 3 seconds and
+% and samplerate are optional parameters with default values of 0.5 seconds and
 % 44100Hz, respectively.
 %
-function stimulusArray = createStimulus(freq, amplitude, duration, samplerate)
+function stimulus = createStimulus(freq, amplitude, duration, samplerate)
     % set default values for duration and samplerate
     if ~exist('duration', 'var') || isempty(duration) 
-        duration = 3;
+        duration = 0.5;
     end
     
     if ~exist('samplerate', 'var') || isempty(samplerate)
         samplerate = 44100;
     end
 
-    % create array with proper length
-    stimulusArray = zeros((4 + duration) * samplerate, 1);
-
-    % create sound wave using piecewise function
-    for i = 1:1:length(stimulusArray)
-        if i <= samplerate
-            % starting zeros
-            continue;
-        elseif i > samplerate  && i <= 2 * samplerate
-            % create upward sloping sinusoid
-            stimulusArray(i,1) = (mod(i, samplerate) / samplerate) * amplitude * sin(2 * pi * i * (freq / samplerate));
-        elseif i > 2 * samplerate && length(stimulusArray) - i >= 2 * samplerate
-            % create flat sinusoid with given amplitude
-            stimulusArray(i,1) = amplitude * sin(2 * pi * i * (freq / samplerate));
-        elseif length(stimulusArray) - i < 2 * samplerate && length(stimulusArray) - i >= samplerate
-            % create downward sloping sinusoid
-            stimulusArray(i,1) = ((samplerate - mod(i, samplerate)) / samplerate) * amplitude * sin(2 * pi * i * (freq / samplerate));
-        else
-            % stopping zeros
-            continue;
-        end
+    % 
+    % Create Stimulus
+    %
+    
+    % define maximum percentage of amplitude for upward/downward slope
+    maxPercent = zeros(1, (1 + duration) * samplerate);
+    
+    % 250ms - 500ms
+    maxPercent(floor(0.25 * samplerate):floor(0.5 * samplerate)) = ...
+        linspace(0,1,floor(0.5 * samplerate) - floor(0.25 * samplerate) + 1);
+    
+    % 500ms - end of stimulus
+    maxPercent(floor(0.5 * samplerate):floor((0.5 + duration) * samplerate)) = 1;
+    
+    % end of stimulus - end of stimulus + 250ms
+    maxPercent(floor((0.5 + duration) * samplerate):floor((0.75 + duration) * samplerate)) = ...
+        linspace(1,0,floor((0.75 + duration) * samplerate) - floor((0.5 + duration) * samplerate) + 1);
+    
+    % create array for stimulus
+    stimulus = zeros(1, (1 + duration) * samplerate);
+    for ii = 1:1:length(stimulus)
+        stimulus(ii) = maxPercent(ii) * amplitude * sin(2 * pi * ii * (freq / samplerate));
     end
 end
 
