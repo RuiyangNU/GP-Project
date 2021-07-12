@@ -1,5 +1,5 @@
 % converts all points from standard curve to hearing level curve given
-% vector?
+% two columns, [freq, amp]
 function out_matrix = convert2hl(input_matrix)
 
     [refFreq, refAmp] = getRef();
