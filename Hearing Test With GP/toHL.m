@@ -19,8 +19,6 @@ function hl = toHL(freq, spl, refX, refY)
     % curve that is closest to the x value of the given point
     [~, indices] = min(abs(freq - refX'));
     
-    % 
-    
     % calculate the hearing loss based on the SPL of the reference point
     % and the SPL of the given point
     hl = spl - refY(indices);
