@@ -15,7 +15,7 @@ in_observed = [in_observed(:,1), toHL(in_observed(:,1), in_observed(:,2))];
 out_observed = 1;
 
 freq_test = linspace(min(refFreq), max(refFreq), testSize)';
-amp_test = linspace(-80, 20, testSize)';
+amp_test = linspace(-20, 80, testSize)';
 [g1, g2] = meshgrid(freq_test, amp_test);
 g1 = reshape(g1, [numel(g1),1]);
 g2 = reshape(g2, [numel(g2),1]);
@@ -59,7 +59,7 @@ for ii = 2:1:numIterations
     plot(refFreq, toHL(refFreq, refAmp), 'Color', 'blue', 'LineWidth', 1);
     scatter(in_observed(:,1), in_observed(:,2), 20, audib2color(out_observed), 'o', 'filled'); hold off;
     xlabel("frequency (Hz)"); xlim([min(freq_test) max(freq_test)]);
-    ylabel("dB SPL"); ylim([-80 20]);
+    ylabel("dB SPL"); ylim([-20 80]);
     
     subplot(2,1,2);
     plot(loss(1:ii));
