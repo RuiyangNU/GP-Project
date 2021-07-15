@@ -60,6 +60,7 @@ for ii = 2:1:numIterations
     scatter(in_observed(:,1), in_observed(:,2), 20, audib2color(out_observed), 'o', 'filled'); hold off;
     xlabel("frequency (Hz)"); xlim([min(freq_test) max(freq_test)]);
     ylabel("dB SPL"); ylim([-20 80]);
+    set(gca, 'YDir','reverse');
     
     subplot(2,1,2);
     plot(loss(1:ii));

@@ -54,7 +54,7 @@ for ii = 1:1:numPoints
     
     % play the stimulus
     player = audioplayer(stim, 44100);
-    play(player);
+    play(player, 44100);
     
     % ask and record feedback
     while true

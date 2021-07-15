@@ -1,7 +1,7 @@
 % Version 1.0
 % Ray Tan, Jeffrey Tang
 % 
-% function hlY = spl2hl(splX, splY, refX, refY)
+% function hl = toHL(freq, spl, refX, refY)
 % double[] = double[], double[], double[], double[]
 % 
 % Converts a array of points from dB SPL to HL using a set of reference
@@ -19,7 +19,7 @@ function hl = toHL(freq, spl, refX, refY)
     % curve that is closest to the x value of the given point
     [~, indices] = min(abs(freq - refX'));
     
-    % calculate the hearing loss based on the SPL of the reference point
+    % calculate the hearing level based on the SPL of the reference point
     % and the SPL of the given point
     hl = spl - refY(indices);
 end
