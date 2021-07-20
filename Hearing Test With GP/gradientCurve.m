@@ -5,6 +5,7 @@ function vals = gradientCurve(inTest, outTest)
     for ii = 1:1:length(noDupes)
         indicies = find(inTest == noDupes(ii));
         [~, I] = min(abs(outTest(indicies) - .5));
-            vals(ii, :) = inTest(I);
+            vals(ii, :) = inTest(I, :);
     end
+    
 end
