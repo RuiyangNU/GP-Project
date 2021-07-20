@@ -1,7 +1,7 @@
 clear;
 clc;
 
-numIterations = 200;
+numIterations = 51;
 
 % obtain reference curve
 refSize = 100;
@@ -10,9 +10,21 @@ refSize = 100;
 % number of points on test scale
 testSize = 200;
 
-in_observed = [13 20];
-in_observed = [in_observed(:,1), toHL(in_observed(:,1), in_observed(:,2))];
-out_observed = 1;
+% in_observed = [13 20];
+% in_observed = [in_observed(:,1), toHL(in_observed(:,1), in_observed(:,2))];
+% out_observed = 1;
+
+in_observed = initialize(5);
+out_observed = zeros(5,1);
+for ii = 1:1:5
+    in_observed(ii,2) = toHL(in_observed(ii,1), in_observed(ii,2));
+    
+    freq = in_observed(ii,1);
+    hl = in_observed(ii,2);
+    hearing_loss = ReLU(freq - 15)^2;
+    audible = double(hl - hearing_loss> 0);
+    out_observed(ii,1) = audible;
+end
 
 freq_test = linspace(min(refFreq), max(refFreq), testSize)';
 amp_test = linspace(-20, 80, testSize)';
@@ -40,8 +52,10 @@ for ii = 2:1:numIterations
     hl = in_test(I, 2);
     
     % determine whether the given point is audible
+    hearing_loss = ReLU(freq - 15)^2;
     noise = 5 - (10 * rand());
-    audible = double(hl + noise > 0);
+    noise = 0;
+    audible = double(hl - hearing_loss + noise > 0);
     
     in_observed = [in_observed; freq, hl];
     out_observed = [out_observed; audible];

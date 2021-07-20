@@ -39,12 +39,7 @@ g1 = reshape(g1, [numel(g1),1]); g2 = reshape(g2, [numel(g2),1]);
 testInput = [g1 g2];
 
 % Predefined points for testing before using GP
-
 predefinedValues = initialize(numPredefinedPoints);
-
-% indices = round(linspace(1, referenceResolution, numPredefinedPoints + 2));
-% predefinedFreqs = refFreq(indices(2:end-1));
-% predefineddBs = refdB(indices(2:end-1));
 
 %
 % Conduct Hearing Test
@@ -141,7 +136,7 @@ for ii = numPredefinedPoints:1:maxIterations
         20, toGradient(testOutput), 's', 'filled'); hold on;
     scatter(observedInput(:,1), observedInput(:,2), ...
         20, audib2color(observedOutput), 'o', 'filled'); hold off; % Observed In/Output
-    set(gca, 'YDir','reverse')
+    set(gca, 'YDir','reverse');
     xlim([min(refFreq), max(refFreq)]);
     ylim([-20, 80]);
     xlabel("Frequency (bark)");
@@ -150,7 +145,8 @@ for ii = numPredefinedPoints:1:maxIterations
     subplot(2,1,2);
     plot(loss(numPredefinedPoints:ii));
     ylim([0;max(loss)+0.1]);
-    xlabel("loss");
+    xlabel("iteration");
+    ylabel("loss");
     drawnow;
 end
 
