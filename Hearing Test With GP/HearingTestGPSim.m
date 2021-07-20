@@ -51,6 +51,9 @@ for ii = 2:1:numIterations
     freq = in_test(I, 1);
     hl = in_test(I, 2);
     
+    noise = 5 - (10 * rand());
+    hl = hl + noise;
+    
     % determine whether the given point is audible
     hearing_loss = ReLU(freq - 15)^2;
     noise = 5 - (10 * rand());
