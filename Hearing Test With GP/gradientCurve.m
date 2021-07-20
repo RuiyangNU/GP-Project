@@ -3,9 +3,9 @@ function vals = gradientCurve(inTest, outTest)
     vals = zeros(1,2);
     
     for ii = 1:1:length(noDupes)
-        indicies = find(inTest == noDupes(ii));
-        [~, I] = min(abs(outTest(indicies) - .5));
-            vals(ii, :) = inTest(I, :);
+        indicies = find(inTest(:, 1) == noDupes(ii));
+        [~, I] = min(abs(outTest(indicies.') - .5));
+            vals(ii, :) = inTest(indicies(I), :);
     end
     
 end
