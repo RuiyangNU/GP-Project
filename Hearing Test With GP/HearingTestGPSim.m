@@ -1,7 +1,7 @@
 clear;
 clc;
 
-numIterations = 51;
+numIterations = 50;
 
 % obtain reference curve
 refSize = 100;
@@ -51,10 +51,13 @@ for ii = 2:1:numIterations
     freq = in_test(I, 1);
     hl = in_test(I, 2);
     
+    % noise = 5 - (10 * rand());
+    noise = 0;
+    hl = hl + noise;
+    
     % determine whether the given point is audible
     hearing_loss = ReLU(freq - 15)^2;
     noise = 5 - (10 * rand());
-    noise = 0;
     audible = double(hl - hearing_loss + noise > 0);
     
     in_observed = [in_observed; freq, hl];
@@ -82,9 +85,9 @@ for ii = 2:1:numIterations
     ylabel("average loss");
     drawnow;
     
-    if (ii > 35) && (loss(ii) < 0.05)
-        break;
-    end
+%     if (ii > 35) && (loss(ii) < 0.05)
+%         break;
+%     end
 end
 
 % end
