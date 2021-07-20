@@ -1,7 +1,7 @@
 clear;
 clc;
 
-numIterations = 100;
+numIterations = 50;
 
 % obtain reference curve
 refSize = 100;
@@ -51,7 +51,8 @@ for ii = 2:1:numIterations
     freq = in_test(I, 1);
     hl = in_test(I, 2);
     
-    noise = 5 - (10 * rand());
+    % noise = 5 - (10 * rand());
+    noise = 0;
     hl = hl + noise;
     
     % determine whether the given point is audible
