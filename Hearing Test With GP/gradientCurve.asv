@@ -1,7 +1,6 @@
 function vals = gradientCurve(matrix)
     dimensions = size(matrix,1);
     vals = zeros(dimensions, 1);
-    for ii = 1:1:dimensions
-           vals(ii) = min(abs(:, ii) - .5);
-    end
+    [~,I] = min(matrix - .5);
+    vals = I;
 end
