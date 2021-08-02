@@ -1,3 +1,4 @@
-function modulatedStimulus = createModulatedStimulus(carrierAmplitude, modulatedAmplitude, duration, samplerate, carrierF, modulationF, modulationDepth, rampDuration)
-    modulatedStimulus = createStimulus(carrierF, carrierAmplitude, duration, samplerate) .* (1 + modulationDepth * createStimulus(modulationF, modulatedAmplitude, duration, samplerate));
-    %%add ramps multiplication step here
+function modulatedStimulus = createModulatedStimulus(amplitude, duration, samplerate, carrierF, modulationF, rampDuration)
+    carrierStimulus = createStimulus(carrierF, amplitude, duration, samplerate);
+    modulatedStimulus = carrierStimulus(linspace(round(samplerate * rampDuration / duration), (end - round(samplerate * rampDuration / duration)), samplerate - 2*round(samplerate * rampDuration / duration))) * modulationF;
+    
