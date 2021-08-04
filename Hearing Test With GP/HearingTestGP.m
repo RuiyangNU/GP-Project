@@ -15,7 +15,8 @@ clc;
 maxIterations = 50; % maximum number of queries before the program stops
 targetLoss = 0.2; % finish testing when the target loss is achieved
 maxAmplitude = 60; % maximum dB of tones delivered
-numPredefinedPoints = 5; % number of points to test before using GP
+numPredefinedPoints = 10;
+ % number of points to test before using GP
 referenceResolution = 100; % number of points along the reference scale
 outputResolution = 100; % number of points along the frequency/amplitude
                         % axes predicted by the GP
@@ -97,7 +98,14 @@ for ii = numPredefinedPoints:1:maxIterations
         'FitMethod', 'exact', ...
         'BasisFunction', 'linear');
     testOutput = predict(gprMdl, testInput);
-    loss(ii) = resubLoss(gprMdl);
+    
+    predictedObservedOutput = predict(gprMdl, observedInput);
+    predictedObservedOutput(predictedObservedOutput < 0) = 0;
+    predictedObservedOutput(predictedObservedOutput > 1) = 1;
+    loss(ii) = (observedOutput-predictedObservedOutput)'* ...
+        (observedOutput-predictedObservedOutput)/numel(observedOutput);
+    
+    averages = gradientCurve(testInput, testOutput);
     
     % get frequency and HL of the most uncertain point
     [~, I] = min(abs(testOutput - 0.5));
@@ -109,7 +117,8 @@ for ii = numPredefinedPoints:1:maxIterations
     observedInput = [observedInput; freqBark, hl];
     
     % Create stimulus
-    stim = createStimulus(bark2hz(freqBark), db2amp(toSpl(freqBark, hl)));
+    actualdb = toSpl(freqBark, hl);
+    stim = createStimulus(bark2hz(freqBark), db2amp(actualdb));
     
     % Deliver stimulus
     fprintf("Please wait until the tone is finished playing.\n");
@@ -135,7 +144,8 @@ for ii = numPredefinedPoints:1:maxIterations
     scatter(testInput(:,1), testInput(:,2), ...
         20, toGradient(testOutput), 's', 'filled'); hold on;
     scatter(observedInput(:,1), observedInput(:,2), ...
-        20, audib2color(observedOutput), 'o', 'filled'); hold off; % Observed In/Output
+        20, audib2color(observedOutput), 'o', 'filled'); % Observed In/Output
+    plot(averages(:,1), averages(:,2), 'Color', 'cyan', 'LineWidth', 1); hold off;
     set(gca, 'YDir','reverse');
     xlim([min(refFreq), max(refFreq)]);
     ylim([-20, 80]);
