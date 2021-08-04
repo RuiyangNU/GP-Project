@@ -1,4 +1,4 @@
-function stim = createFM(freq, modfreq, modIndex, amp, duration, samplerate)
+function stim = createAM(freq, modfreq, modIndex, amp, duration, samplerate)
 % set default values for duration and samplerate
     if ~exist('duration', 'var') || isempty(duration) 
         duration = 0.5;
@@ -40,6 +40,6 @@ function stim = createFM(freq, modfreq, modIndex, amp, duration, samplerate)
     % Create array for stimulus
     stim = zeros(1, signalLength);
     for ii = 1:1:signalLength
-        stim(ii) = maxAmp(ii) * amp * sin(2*pi*ii*freq/samplerate + modIndex * sin(2*pi*ii*modfreq/samplerate));
+        stim(ii) = maxAmp(ii) * (amp + modIndex * sin(2*pi*ii*modfreq/samplerate)) * sin(2*pi*ii*freq/samplerate);
     end
 end
