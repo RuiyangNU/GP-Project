@@ -13,8 +13,8 @@ function output = fftModulation(mouseResponse)
     oneSidedCarrier = twoSidedCarrier(1:length(carrierFreq)/2+1);
     oneSidedCarrier(2:end-1) = 2 * oneSidedCarrier(2:end-1);
 
-    f1 = max(modulatedFreq);
-    f2 = max(carrierFreq);
+    f1 = max(oneSidedModulated);
+    f2 = max(onesideCarrier);
     % checks if noise affects the result
     if f1 > f2 * 1.01
         output = 1;
