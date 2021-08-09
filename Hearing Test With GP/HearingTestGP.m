@@ -41,6 +41,8 @@ testInput = [g1 g2];
 
 % Predefined points for testing before using GP
 predefinedValues = initialize(numPredefinedPoints);
+predefinedValues(9,:) = ([24.4 60]);
+predefinedValues(10,:) = ([24.6 80]);
 
 %
 % Conduct Hearing Test

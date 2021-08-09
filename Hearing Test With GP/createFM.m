@@ -1,4 +1,4 @@
-function stim = createFM(freq, modfreq, modIndex, amp, duration, samplerate)
+function stim = createFM(freq, modfreq, amp, duration, samplerate)
 % set default values for duration and samplerate
     if ~exist('duration', 'var') || isempty(duration) 
         duration = 0.5;
@@ -9,7 +9,7 @@ function stim = createFM(freq, modfreq, modIndex, amp, duration, samplerate)
     end
     
     % Calculate the length of the signal in steps of 1/samplerate seconds
-    signalLength = floor(0.05 * samplerate + 2 * duration * samplerate);
+    signalLength = floor(0.06 * samplerate + 2 * duration * samplerate);
     
     %
     % Create Stimulus
@@ -22,24 +22,29 @@ function stim = createFM(freq, modfreq, modIndex, amp, duration, samplerate)
     % 0ms -> 10ms
     maxAmp(1:floor(0.01*samplerate)) = 0;
     
-    % 10ms -> 20ms
+    % 10ms -> 20ms (Upward Slope)
     maxAmp(floor(0.01*samplerate):floor(0.02*samplerate)) = ...
         linspace(0,1,floor(0.02*samplerate)-floor(0.01*samplerate)+1);
     
-    % 20ms -> end of stimulus
+    % 20ms -> end of stimulus (AM Tone)
     maxAmp(floor(0.02*samplerate):floor(0.02*samplerate + duration*samplerate)) = 1;
     
-    % end of stimulus -> 10ms after
+    % end of stimulus -> 10ms after (Downward Slope)
     maxAmp(floor(0.02*samplerate + duration*samplerate):floor(0.03*samplerate + duration*samplerate)) = ...
         linspace(1,0,floor(0.03*samplerate + duration*samplerate) - floor(0.02*samplerate + duration*samplerate) + 1);
     
-    % Copy the maximum amplitudes from the first ramp to the second
-    maxAmp(floor(0.03*samplerate + duration*samplerate):end) = ...
+    % end + 10ms -> end + 20ms
+     maxAmp(floor(0.03*samplerate + duration*samplerate):floor(0.04*samplerate + duration*samplerate)) = ...
+        0;
+    
+    % Copy the maximum amplitudes from the modulated section to the
+    % non-modulated section
+    maxAmp(floor(0.04*samplerate + duration*samplerate):end) = ...
         maxAmp(floor(0.01*samplerate):floor(0.03*samplerate + duration*samplerate));
     
     % Create array for stimulus
-    stim = zeros(1, signalLength);
-    for ii = 1:1:signalLength
-        stim(ii) = maxAmp(ii) * amp * sin(2*pi*ii*freq/samplerate + modIndex * sin(2*pi*ii*modfreq/samplerate));
-    end
+    stim = 1:1:signalLength;
+    modIndex = zeros(1,signalLength);
+    modIndex(1:floor(0.04*samplerate + duration*samplerate)) = 1;
+    stim = maxAmp .* amp .* sin(2*pi* stim * freq/samplerate + modIndex .* sin(2*pi* stim * modfreq/samplerate));
 end
