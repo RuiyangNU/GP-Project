@@ -1,3 +1,10 @@
+% Version 1.0
+% Ray Tan, Jeffrey Tang
+%
+% Compares the response to the modulated signal (first half of response) to
+% the response to the carrier signal (second half of response) and
+% determines whether the modulated response is greater than the carrier
+% response for a reason other than noise.
 function audible = compareFFT(response)
 
     % Determine the length of the response to the signal
