@@ -6,15 +6,20 @@
 % a modulation frequency of modfreq, with a modulation index of 1. The
 % duration and samplerate of the signal are optional parameters with
 % default values of 0.5 seconds and 44100 samples/second.
-
 function stim = createFM(freq, modfreq, amp, duration, samplerate)
-% set default values for duration and samplerate
+    % Set default values for duration and samplerate
     if ~exist('duration', 'var') || isempty(duration) 
         duration = 0.5;
     end
     
     if ~exist('samplerate', 'var') || isempty(samplerate)
         samplerate = 44100;
+    end
+    
+    % Display a warning if the modulation frequency is higher than the
+    % carrier frequency
+    if modfreq >= freq
+        warning("Modulation frequency should be lower than the carrier frequency.");
     end
     
     % Calculate the length of the signal in steps of 1/samplerate seconds
