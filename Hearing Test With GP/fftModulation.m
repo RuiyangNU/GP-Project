@@ -3,8 +3,15 @@
 function output = fftModulation(mouseResponse)
 % splits the response into the modulated followed by the carrier frequency
     modulatedFreq = fft(mouseResponse(1:floor(length(mouseResponse)/2)));
+    % turns the two sided spectrum into one sided for easier code analysis
+    twoSidedModulated = abs(modulatedFreq/length(modulatedFreq));
+    oneSidedModulated = twoSidedModulated(1:length(modulatedFreq)/2+1);
+    oneSidedModulated(2:end-1) = 2 * oneSidedModulated(2:end-1);
     
     carrierFreq = fft(mouseResponse(floor(length(mouseResponse)/2)+1:end))
+    twoSidedCarrier = abs(carrierFreq/length(carrierFreq));
+    oneSidedCarrier = twoSidedCarrier(1:length(carrierFreq)/2+1);
+    oneSidedCarrier(2:end-1) = 2 * oneSidedCarrier(2:end-1);
 
     f1 = max(modulatedFreq);
     f2 = max(carrierFreq);
@@ -14,12 +21,5 @@ function output = fftModulation(mouseResponse)
     else
         output = 0;
     end
-    % turns the two sided spectrum into one sided for easier code analysis
-    % in the future, does not affect output
-    oneSidedModulated = modulatedFreq(1:length(modulatedFreq)/2+1)
-    oneSidedModulated(2:end-1) = 2 * modulatedFreq(2:end-1)
-    % does the same thing to the carrier frequency as with the modulated
-    oneSidedCarrier = carrierFreq(1:length(carrierFreq)/2+1)
-    oneSidedCarrier(2:end-1) = 2 * carrierFreq(2:end-1)
     
 
