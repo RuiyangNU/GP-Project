@@ -20,6 +20,6 @@ function output = fftModulation(mouseResponse)
         output = 1;
     else
         output = 0;
-    
     end
     
+
