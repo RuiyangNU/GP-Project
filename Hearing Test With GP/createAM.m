@@ -1,3 +1,12 @@
+% Version 1.0
+% Ray Tan, Jeffrey Tang
+%
+% Creates an amplitude modulated signal followed by a pure tone. The
+% modulated signal has a frequency of freq, an amplitude of amp, and
+% a modulation frequency of modfreq, with a modulation index of 1. The
+% duration and samplerate of the signal are optional parameters with
+% default values of 0.5 seconds and 44100 samples/second.
+
 function stim = createAM(freq, modfreq, amp, duration, samplerate)
 % set default values for duration and samplerate
     if ~exist('duration', 'var') || isempty(duration) 

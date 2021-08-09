@@ -1,3 +1,12 @@
+% Version 1.0
+% Ray Tan, Jeffrey Tang
+%
+% Creates an frequency modulated signal followed by a pure tone. The
+% modulated signal has a frequency of freq, an amplitude of amp, and
+% a modulation frequency of modfreq, with a modulation index of 1. The
+% duration and samplerate of the signal are optional parameters with
+% default values of 0.5 seconds and 44100 samples/second.
+
 function stim = createFM(freq, modfreq, amp, duration, samplerate)
 % set default values for duration and samplerate
     if ~exist('duration', 'var') || isempty(duration) 
@@ -26,7 +35,7 @@ function stim = createFM(freq, modfreq, amp, duration, samplerate)
     maxAmp(floor(0.01*samplerate):floor(0.02*samplerate)) = ...
         linspace(0,1,floor(0.02*samplerate)-floor(0.01*samplerate)+1);
     
-    % 20ms -> end of stimulus (AM Tone)
+    % 20ms -> end of stimulus (FM Tone)
     maxAmp(floor(0.02*samplerate):floor(0.02*samplerate + duration*samplerate)) = 1;
     
     % end of stimulus -> 10ms after (Downward Slope)
