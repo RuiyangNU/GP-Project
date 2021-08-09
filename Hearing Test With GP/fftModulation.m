@@ -13,7 +13,6 @@ function output = fftModulation(mouseResponse)
         output = 1;
     else
         output = 0;
-    
     end
     % turns the two sided spectrum into one sided for easier code analysis
     % in the future, does not affect output
@@ -23,3 +22,4 @@ function output = fftModulation(mouseResponse)
     oneSidedCarrier = carrierFreq(1:length(carrierFreq)/2+1)
     oneSidedCarrier(2:end-1) = 2 * carrierFreq(2:end-1)
     
+

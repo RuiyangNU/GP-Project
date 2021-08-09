@@ -1,7 +1,8 @@
 clear;
 clc;
 
-numIterations = 50;
+rng('default');
+numIterations = 75;
 
 % obtain reference curve
 refSize = 100;
@@ -59,6 +60,9 @@ for ii = 2:1:numIterations
     hearing_loss = ReLU(freq - 15)^2;
     noise = 5 - (10 * rand());
     audible = double(hl - hearing_loss + noise > 0);
+    if rand() <= 0.00
+        audible = double(~audible);
+    end
     
     in_observed = [in_observed; freq, hl];
     out_observed = [out_observed; audible];
@@ -68,12 +72,20 @@ for ii = 2:1:numIterations
         'FitMethod', 'exact', ...
         'BasisFunction', 'linear');
     out_test = predict(gprMdl, in_test);
-    loss(ii) = resubLoss(gprMdl);
+    
+    out_observed_pred = predict(gprMdl, in_observed);
+    out_observed_pred(out_observed_pred < 0) = 0;
+    out_observed_pred(out_observed_pred > 1) = 1;
+    loss(ii) = (out_observed-out_observed_pred)'* ...
+        (out_observed-out_observed_pred)/numel(out_observed);
+    
+    averages = gradientCurve(in_test, out_test);
 
     % plotting
     subplot(2,1,1);
     scatter(in_test(:,1), in_test(:,2), 10, toGradient(out_test), 's', 'filled'); hold on;
-    plot(refFreq, toHL(refFreq, refAmp), 'Color', 'blue', 'LineWidth', 1);
+    % plot(refFreq, toHL(refFreq, refAmp), 'Color', 'blue', 'LineWidth', 1);
+    plot(averages(:,1), averages(:,2), 'Color', 'cyan', 'LineWidth', 1);
     scatter(in_observed(:,1), in_observed(:,2), 20, audib2color(out_observed), 'o', 'filled'); hold off;
     xlabel("frequency (Hz)"); xlim([min(freq_test) max(freq_test)]);
     ylabel("dB SPL"); ylim([-20 80]);
