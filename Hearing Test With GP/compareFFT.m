@@ -18,11 +18,14 @@ function audible = compareFFT(response)
     % Run an FFT on either response
     modFFT = fft(modResponse);
     modL = length(modResponse);
-    modP2 = abs(modFFT/modL);
-    modP1 = modP2(1:ceil(modL/2)+1);
     
     carrFFT = fft(carrResponse);
     carrL = length(carrResponse);
+    
+    % Compute one-sided spetrum
+    modP2 = abs(modFFT/modL);
+    modP1 = modP2(1:ceil(modL/2)+1);
+
     carrP2 = abs(carrFFT/carrL);
     carrP1 = carrP2(1:ceil(carrL/2)+1);
     
