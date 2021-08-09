@@ -1,7 +1,8 @@
 % returns a 1 or 0 based on the mouse's response to a
 % modulated followed by a carrier frequency using fast fourier transform
 function output = fftModulation(mouseResponse)
-% splits the response into the modulated followed by the carrier frequency
+
+    % splits the response into the modulated followed by the carrier frequency
     modulatedFreq = fft(mouseResponse(1:floor(length(mouseResponse)/2)));
     % turns the two sided spectrum into one sided for easier code analysis
     twoSidedModulated = abs(modulatedFreq/length(modulatedFreq));
@@ -12,7 +13,7 @@ function output = fftModulation(mouseResponse)
     twoSidedCarrier = abs(carrierFreq/length(carrierFreq));
     oneSidedCarrier = twoSidedCarrier(1:length(carrierFreq)/2+1);
     oneSidedCarrier(2:end-1) = 2 * oneSidedCarrier(2:end-1);
-
+    
     f1 = max(oneSidedModulated);
     f2 = max(oneSidedCarrier);
     % checks if noise affects the result
@@ -21,5 +22,4 @@ function output = fftModulation(mouseResponse)
     else
         output = 0;
     end
-    
 
