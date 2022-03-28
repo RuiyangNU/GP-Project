@@ -48,7 +48,7 @@ loss(1) = resubLoss(gprMdl);
 for ii = 2:1:numIterations
     
     % get frequency and HL of the most uncertain point
-    [~, I] = min(abs(out_test - 0.5));
+    [~, I] = min(abs(out_test - 0.55));
     freq = in_test(I, 1);
     hl = in_test(I, 2);
     
@@ -87,15 +87,17 @@ for ii = 2:1:numIterations
     % plot(refFreq, toHL(refFreq, refAmp), 'Color', 'blue', 'LineWidth', 1);
     plot(averages(:,1), averages(:,2), 'Color', 'cyan', 'LineWidth', 1);
     scatter(in_observed(:,1), in_observed(:,2), 20, audib2color(out_observed), 'o', 'filled'); hold off;
-    xlabel("frequency (Hz)"); xlim([min(freq_test) max(freq_test)]);
+    xlabel("frequency (bark)"); xlim([min(freq_test) max(freq_test)]);
     ylabel("dB SPL"); ylim([-20 80]);
     set(gca, 'YDir','reverse');
     
     subplot(2,1,2);
     plot(loss(1:ii));
     xlabel("iteration");
-    ylabel("average loss");
+    ylabel("total loss");
     drawnow;
+    
+    pause();
     
 %     if (ii > 35) && (loss(ii) < 0.05)
 %         break;
