@@ -1,13 +1,15 @@
-% Version 1.0
-% Ray Tan, Jeffrey Tang
-%
-% function [refX, refY] = getRef(numPoints)
-% [double[], double[]] = int
-%
-% Generates an interpolated reference curve for the normal minimum audible
-% SPL vs frequency for ages 10-21. The number of points in the curve is
-% optional and has a default of 100.
-% Data collected from ___________.
+%{
+Version 1.0
+Ray Tan, Jeffrey Tang
+
+function [refX, refY] = getRef(numPoints)
+parameters:
+    n_points: the number of points in t
+
+Generates an interpolated reference curve for the normal minimum audible
+SPL vs frequency on the bark scale for ages 10-21. The number of points in the curve is
+optional and has a default of 100.
+%}
 function [refX, refY] = getRef(numPoints)
     % set default values for numPoints
     if ~exist('numPoints', 'var') || isempty(numPoints)
